@@ -1,8 +1,8 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
+import { googleMapActions } from "../store/googleMapStore";
 
 function GoogleMapContainer({ minHeight }: { minHeight: string }) {
   const ref = useRef<HTMLDivElement>(null);
-  const [map, setMap] = useState<google.maps.Map>();
 
   useEffect(() => {
     const initialCenter = {
@@ -17,11 +17,13 @@ function GoogleMapContainer({ minHeight }: { minHeight: string }) {
         center: initialCenter,
         zoom: initialZoomSize,
       });
-      setMap(googleMap);
+      googleMapActions.setMap(googleMap);
     }
   }, []);
 
-  return <div ref={ref} id="map" style={{ minHeight: minHeight, }} />;
+  return (
+    <div ref={ref} id="map" style={{ minHeight: minHeight, }} />
+  );
 }
 
 export default GoogleMapContainer;
