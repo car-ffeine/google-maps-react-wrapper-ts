@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { googleMapActions } from "../store/googleMapStore";
+import MarkerContainer from "./MarkerContainer";
 
 function GoogleMapContainer({ minHeight }: { minHeight: string }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -22,7 +23,10 @@ function GoogleMapContainer({ minHeight }: { minHeight: string }) {
   }, []);
 
   return (
-    <div ref={ref} id="map" style={{ minHeight: minHeight, }} />
+    <>
+      <div ref={ref} id="map" style={{ minHeight: minHeight, }} />
+      <MarkerContainer />
+    </>
   );
 }
 
