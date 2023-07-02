@@ -18,6 +18,9 @@ function GoogleMapContainer({ minHeight }: { minHeight: string }) {
         center: initialCenter,
         zoom: initialZoomSize,
       });
+      googleMap.addListener("dragend", () => {
+        console.log("center is changed. ")
+      });
       googleMapActions.setMap(googleMap);
     }
   }, []);
