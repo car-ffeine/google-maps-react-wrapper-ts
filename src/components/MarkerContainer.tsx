@@ -8,13 +8,19 @@ function MarkerContainer() {
 
 
   const getMarkers = () => {
-    console.log('markers!')
     markers.forEach((marker)=>{
-      return new google.maps.Marker({
+      const newMarker = new google.maps.Marker({
         position: {lat: marker.lat, lng: marker.lng},
         map: googleMap,
         title: `${marker.title}`,
       });
+
+      newMarker.addListener('click', () =>{
+        console.log('marker clicked!', marker);
+        if(googleMap){
+          googleMap.panTo({lat: marker.lat, lng: marker.lng})
+        }
+      })
     })
   }
 
