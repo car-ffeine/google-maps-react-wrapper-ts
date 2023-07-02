@@ -1,6 +1,5 @@
 import { useEffect, useRef } from "react";
 import { googleMapActions } from "../store/googleMapStore";
-import MarkerContainer from "./MarkerContainer";
 import {googleMarkersActions} from "../store/googleMarkersStore";
 
 function GoogleMapContainer({ minHeight }: { minHeight: string }) {
@@ -23,14 +22,18 @@ function GoogleMapContainer({ minHeight }: { minHeight: string }) {
         console.log("center is changed. try to re-fetch!");
         googleMarkersActions.getMarkers();
       });
+      googleMap.addListener("zoom_changed", () => {
+        console.log("zoom is changed. try to re-fetch!");
+        googleMarkersActions.getMarkers();
+      });
       googleMapActions.setMap(googleMap);
+      googleMarkersActions.getMarkers();
     }
   }, []);
 
   return (
     <>
       <div ref={ref} id="map" style={{ minHeight: minHeight, }} />
-      <MarkerContainer />
     </>
   );
 }
