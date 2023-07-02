@@ -16,6 +16,7 @@ function GoogleMapContainer({ minHeight }: { minHeight: string }) {
       const googleMap = new window.google.maps.Map(ref.current, {
         center: initialCenter,
         zoom: initialZoomSize,
+        disableDefaultUI:true,
       });
       googleMap.addListener("dragend", () => {
         console.log("center is changed. try to re-fetch!");
