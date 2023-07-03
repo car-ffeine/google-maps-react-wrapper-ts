@@ -34,4 +34,15 @@ export const handlers = [
       }),
     )
   }),
+
+  rest.post('/getMarkers', (req, res, ctx) => {
+    console.log(req.body)
+
+    return res(
+      // Respond with a 200 status code
+      ctx.delay(200),
+      ctx.status(200),
+      ctx.json([])
+    )
+  }),
 ]
