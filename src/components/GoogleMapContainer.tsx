@@ -1,6 +1,5 @@
 import { useEffect, useRef } from "react";
 import { googleMapActions } from "../store/googleMapStore";
-import { googleMarkersAction } from "../store/googleMarkersStore";
 
 function GoogleMapContainer({ minHeight }: { minHeight: string }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -19,16 +18,7 @@ function GoogleMapContainer({ minHeight }: { minHeight: string }) {
         zoom: initialZoomSize,
         disableDefaultUI: true,
       });
-      googleMap.addListener("dragend", () => {
-        console.log("center is changed. try to re-fetch!");
-        googleMarkersAction.getMarkers();
-      });
-      googleMap.addListener("zoom_changed", () => {
-        console.log("zoom is changed. try to re-fetch!");
-        googleMarkersAction.getMarkers();
-      });
       googleMapActions.setMap(googleMap);
-      googleMarkersAction.getMarkers();
     }
   }, []);
 

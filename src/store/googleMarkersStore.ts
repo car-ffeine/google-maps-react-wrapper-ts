@@ -26,15 +26,15 @@ export const googleMarkersAction = {
     const centerY = center.lat();
 
 
-    const response = await fetch('/getMarkers', {
-      method: "POST",
-      body: JSON.stringify({
-        lng: centerX,
-        lat: centerY,
-        deltaX,
-        deltaY
-      })
-    })
+    // const response = await fetch('/getMarkers', {
+    //   method: "POST",
+    //   body: JSON.stringify({
+    //     lng: centerX,
+    //     lat: centerY,
+    //     deltaX,
+    //     deltaY
+    //   })
+    // })
 
     markers.forEach((marker) => {
       const newMarker = new google.maps.Marker({
