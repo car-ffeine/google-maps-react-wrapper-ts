@@ -4,6 +4,8 @@ import { googleMapActions } from "../store/googleMapStore";
 function GoogleMapContainer({ minHeight }: { minHeight: string }) {
   const ref = useRef<HTMLDivElement>(null);
 
+  console.log('혹시 재 렌더링 되면 이게 뜰 것임')
+
   useEffect(() => {
     const initialCenter = {
       lat: 37.5056102333107,

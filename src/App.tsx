@@ -1,5 +1,6 @@
 import { Wrapper, Status } from "@googlemaps/react-wrapper";
 import GoogleMapContainer from "./components/GoogleMapContainer";
+import UI from "./components/UI";
 
 
 const render = (status: Status) => {
@@ -16,9 +17,12 @@ const render = (status: Status) => {
 function App() {
 
   return (
-    <Wrapper apiKey={`${process.env.REACT_APP_API_KEY}`} render={render} >
-      <GoogleMapContainer minHeight="100vh" />
-    </Wrapper>
+    <>
+      <Wrapper apiKey={`${process.env.REACT_APP_API_KEY}`} render={render} >
+        <GoogleMapContainer minHeight="100vh" />
+      </Wrapper>
+      <UI />
+    </>
   );
 }
 
