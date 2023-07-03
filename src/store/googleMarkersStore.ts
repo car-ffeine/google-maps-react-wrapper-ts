@@ -1,6 +1,6 @@
 import { store } from "../utils/x-state";
-import { markers } from "../data/markers";
 import { googleMapStore } from "./googleMapStore";
+import { Marker, MarkersRequest } from "../types/type";
 
 export const googleMarkersStore = store<google.maps.Marker[]>([]);
 
@@ -12,13 +12,8 @@ export const googleMarkersAction = {
     const googleMap = googleMapStore.getState();
     if (!googleMap) return null;
 
-    console.log(googleMap.getBounds()) // 문제가 되는 시점. 1회 저장 혹은 화면 1회 이동 이후(리프레시 이후)에는 정상 동작함
-
     const center = googleMap.getCenter() as google.maps.LatLng;
     const bounds = googleMap.getBounds() as google.maps.LatLngBounds;
-
-    console.log(`new lnglat: ${center}`);
-    console.log(`new bounds: ${bounds}`);
 
     const deltaX = (bounds?.getNorthEast().lng() - bounds?.getSouthWest().lng()) / 2;
     const deltaY = (bounds?.getNorthEast().lat() - bounds?.getSouthWest().lat()) / 2;
@@ -26,17 +21,19 @@ export const googleMarkersAction = {
     const centerY = center.lat();
 
 
-    // const response = await fetch('/getMarkers', {
-    //   method: "POST",
-    //   body: JSON.stringify({
-    //     lng: centerX,
-    //     lat: centerY,
-    //     deltaX,
-    //     deltaY
-    //   })
-    // })
+    const response = await fetch('/getMarkers', {
+      method: "POST",
+      body: JSON.stringify({
+        lng: centerX,
+        lat: centerY,
+        deltaX,
+        deltaY
+      } as MarkersRequest)
+    })
+    const markers: Marker[] = await response.json();
 
-    markers.forEach((marker) => {
+
+    const newMarkers = markers.map((marker) => {
       const newMarker = new google.maps.Marker({
         position: { lat: marker.lat, lng: marker.lng },
         map: googleMap,
@@ -47,8 +44,13 @@ export const googleMarkersAction = {
         console.log('marker clicked!', marker);
         if (googleMap) {
           googleMap.panTo({ lat: marker.lat, lng: marker.lng })
+          googleMarkersAction.getMarkers();
         }
       });
+
+      return newMarker;
     })
+
+    googleMarkersStore.setState(newMarkers);
   }
 }

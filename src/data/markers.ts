@@ -1,9 +1,4 @@
-type Marker = {
-  id: number,
-  lat: number,
-  lng: number,
-  title: string
-}
+import { Marker } from "../types/type";
 
 export const markers: Marker[] = [
   {
