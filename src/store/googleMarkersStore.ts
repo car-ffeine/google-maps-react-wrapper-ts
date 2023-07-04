@@ -9,7 +9,6 @@ export const googleMarkersAction = {
     /**
      * TODO: 재요청 시 기존 마커를 메모리에서 제거하는 작업이 필요할수도 있다고 생각함
      */
-    googleMarkersAction.removeAllMarkers();
 
     const googleMap = googleMapStore.getState();
     if (!googleMap) return null;
@@ -52,6 +51,8 @@ export const googleMarkersAction = {
 
       return newMarker;
     })
+
+    googleMarkersAction.removeAllMarkers();
 
     googleMarkersStore.setState(newMarkers);
   },
