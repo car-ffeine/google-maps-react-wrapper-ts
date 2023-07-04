@@ -1,5 +1,5 @@
 import { googleMarkersStore } from "../store/googleMarkersStore";
-import { useExternalValue } from "../utils/x-state";
+import {useExternalValue} from "external-state";
 
 function UI() {
   const markers = useExternalValue(googleMarkersStore);

@@ -1,6 +1,6 @@
-import { store } from "../utils/x-state";
 import { googleMapStore } from "./googleMapStore";
 import { Marker, MarkersRequest } from "../types/type";
+import {store} from "external-state";
 
 export const googleMarkersStore = store<google.maps.Marker[]>([]);
 

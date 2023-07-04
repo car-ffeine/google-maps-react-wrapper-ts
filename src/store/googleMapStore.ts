@@ -1,5 +1,5 @@
-import { store } from "../utils/x-state";
 import { googleMarkersAction } from "./googleMarkersStore";
+import {store} from "external-state";
 
 type googleMapType = google.maps.Map | undefined;
 export const googleMapStore = store<googleMapType>(undefined);
