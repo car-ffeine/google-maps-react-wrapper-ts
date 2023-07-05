@@ -9,14 +9,19 @@ function GoogleMarkersContainer() {
 
   // react-query
   const { isFetching, ...queryInfo } = useMarkers();
-  console.log(`markers in component: ${queryInfo.data?.length}`)
+  const markers = queryInfo.data
+  console.log(`markers in component: ${markers?.length}`)
+
+  if (!markers) {
+    return (<></>)
+  }
 
   return (
     <>
       {
-        (map && queryInfo.isSuccess) && Object.entries(queryInfo.data).map(([key, marker]) => (
+        (map && queryInfo.isSuccess) && markers.map((marker) => (
           <GoogleMarker
-            key={key}
+            key={marker.id}
             map={map}
             marker={marker}
             onClick={() => console.log(marker)}

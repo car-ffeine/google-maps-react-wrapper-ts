@@ -1,6 +1,5 @@
 import { useEffect, useRef } from "react";
 import { googleMapStore } from "../store/googleMapStore";
-import GoogleMarkersContainer from "./GoogleMarkersContainer";
 import { fetchMarkers } from "../query/markerQuery";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
@@ -59,7 +58,6 @@ function GoogleMapContainer({ minHeight }: { minHeight: string }) {
   return (
     <>
       <div ref={ref} id="map" style={{ minHeight: minHeight, }} />
-      {<GoogleMarkersContainer />}
     </>
   );
 }
