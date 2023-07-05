@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@googlemaps/react-wrapper": "^1.1.35",
+    "@tanstack/react-query": "^4.29.19",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -11,6 +12,7 @@
     "@types/node": "^16.18.37",
     "@types/react": "^18.2.14",
     "@types/react-dom": "^18.2.6",
+    "axios": "^1.4.0",
     "external-state": "^0.1.16",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -43,6 +45,7 @@
     ]
   },
   "devDependencies": {
+    "@tanstack/eslint-plugin-query": "^4.29.9",
     "@types/google.maps": "^3.53.4",
     "msw": "^1.2.2"
   },
