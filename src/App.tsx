@@ -18,7 +18,10 @@ function App() {
 
   return (
     <>
-      <Wrapper apiKey={`${process.env.REACT_APP_API_KEY}`} render={render} >
+      <Wrapper
+        apiKey={`${process.env.REACT_APP_API_KEY}`}
+        render={render}
+      >
         <GoogleMapContainer minHeight="100vh" />
       </Wrapper>
       <UI />
