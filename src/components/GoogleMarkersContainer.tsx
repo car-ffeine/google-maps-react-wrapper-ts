@@ -1,4 +1,3 @@
-// import {useState} from "react";
 import { useExternalValue } from "external-state";
 import GoogleMarker from "./GoogleMarker";
 import { googleMapStore } from "../store/googleMapStore";
@@ -12,14 +11,14 @@ function GoogleMarkersContainer() {
   const markers = queryInfo.data
   console.log(`markers in component: ${markers?.length}`)
 
-  if (!markers) {
-    return (<></>)
+  if (!markers || !map || !queryInfo.isSuccess) {
+    return <></>
   }
 
   return (
     <>
       {
-        (map && queryInfo.isSuccess) && markers.map((marker) => (
+        markers.map((marker) => (
           <GoogleMarker
             key={marker.id}
             map={map}

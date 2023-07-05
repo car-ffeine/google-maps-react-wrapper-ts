@@ -1,22 +1,13 @@
 import { useEffect, useRef } from "react";
 import { googleMapStore } from "../store/googleMapStore";
-import { fetchMarkers } from "../query/markerQuery";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useExternalValue } from "external-state";
+import GoogleMapListener from "./GoogleMapListener";
 
 function GoogleMapContainer({ minHeight }: { minHeight: string }) {
   const ref = useRef<HTMLDivElement>(null);
+  const googleMap = useExternalValue(googleMapStore);
 
   console.log('혹시 재 렌더링 되면 이게 뜰 것임')
-  const queryClient = useQueryClient();
-
-
-  const markerMutation = useMutation({
-    mutationFn: fetchMarkers,
-    // Always refetch after error or success:
-    onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ['markers'] });
-    },
-  })
 
   useEffect(() => {
     const initialCenter = {
@@ -33,24 +24,6 @@ function GoogleMapContainer({ minHeight }: { minHeight: string }) {
         disableDefaultUI: true,
       });
 
-      googleMap.addListener("dragend", () => {
-        console.log("center is changed. try to re-fetch!");
-        markerMutation.mutate();
-      });
-      googleMap.addListener("zoom_changed", () => {
-        console.log("zoom is changed. try to re-fetch!");
-        markerMutation.mutate();
-      });
-
-      /**
-       * 최초 1회 바운드 값 설정 이후에 마커를 요청한다. 이후에 스스로 제거 처리됨
-       */
-      const initMarkersEvent = googleMap.addListener('bounds_changed', () => {
-        console.log("==========bounds are changed. try to fetch!==========");
-        markerMutation.mutate();
-        google.maps.event.removeListener(initMarkersEvent)
-      })
-
       googleMapStore.setState(googleMap);
     }
   }, []);
@@ -58,6 +31,7 @@ function GoogleMapContainer({ minHeight }: { minHeight: string }) {
   return (
     <>
       <div ref={ref} id="map" style={{ minHeight: minHeight, }} />
+      {googleMap && <GoogleMapListener googleMap={googleMap} />}
     </>
   );
 }
