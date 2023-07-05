@@ -3,6 +3,9 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import { worker } from "./mocks/browser.js";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
 
 async function main() {
   // msw 세팅 시작
@@ -19,7 +22,9 @@ async function main() {
   );
   root.render(
     // <React.StrictMode>
+    <QueryClientProvider client={queryClient}>
       <App />
+    </QueryClientProvider>
     // </React.StrictMode>
   );
 }

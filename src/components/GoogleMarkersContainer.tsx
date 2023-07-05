@@ -1,23 +1,28 @@
 // import {useState} from "react";
-// import {markers} from "../data/markers";
+import { useExternalValue } from "external-state";
 import GoogleMarker from "./GoogleMarker";
-import {Marker} from "../types/type";
+import { googleMapStore } from "../store/googleMapStore";
+import { useMarkers } from "../query/markerQuery";
 
-function GoogleMarkersContainer({map, markers}:{map:google.maps.Map, markers:Marker[]}){
-  // const [data,setData] = useState(markers);
+function GoogleMarkersContainer() {
+  const map = useExternalValue(googleMapStore);
 
-  return(
+  // react-query
+  const { isFetching, ...queryInfo } = useMarkers();
+  console.log(`markers in component: ${queryInfo.data?.length}`)
+
+  return (
     <>
-        {
-          Object.entries(markers).map(([key,marker])=>(
-            <GoogleMarker
-              key={key}
-              map={map}
-              marker={marker}
-              onClick={()=>console.log(marker)}
-            />
-          ))
-        }
+      {
+        (map && queryInfo.isSuccess) && Object.entries(queryInfo.data).map(([key, marker]) => (
+          <GoogleMarker
+            key={key}
+            map={map}
+            marker={marker}
+            onClick={() => console.log(marker)}
+          />
+        ))
+      }
     </>
   )
 }

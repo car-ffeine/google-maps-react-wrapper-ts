@@ -1,13 +1,20 @@
-import { googleMarkersStore } from "../store/googleMarkersStore";
-import {useExternalValue} from "external-state";
+import { useMarkers } from "../query/markerQuery";
 
 function UI() {
-  const markers = useExternalValue(googleMarkersStore);
+
+  // react-query
+  const { isFetching, ...queryInfo } = useMarkers();
 
   return (
-    <div style={{ zIndex: 999, position: 'fixed', bottom: 10, right: 10, backgroundColor: 'white', padding: 10 }}>
-      {markers.length}
-    </div>
+    <>
+      {
+        queryInfo.isSuccess && (
+          <div style={{ zIndex: 999, position: 'fixed', bottom: 10, right: 10, backgroundColor: 'white', padding: 10 }}>
+            {queryInfo.data.length}
+          </div>
+        )
+      }
+    </>
   )
 }
 

@@ -1,14 +1,23 @@
 import { useEffect, useRef } from "react";
-import {googleMapActions, googleMapStore} from "../store/googleMapStore";
+import { googleMapStore } from "../store/googleMapStore";
 import GoogleMarkersContainer from "./GoogleMarkersContainer";
-import {useExternalValue} from "external-state";
-import {googleMarkersAction} from "../store/googleMarkersStore";
+import { fetchMarkers } from "../query/markerQuery";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 function GoogleMapContainer({ minHeight }: { minHeight: string }) {
   const ref = useRef<HTMLDivElement>(null);
-  const map = useExternalValue(googleMapStore);
 
   console.log('혹시 재 렌더링 되면 이게 뜰 것임')
+  const queryClient = useQueryClient();
+
+
+  const markerMutation = useMutation({
+    mutationFn: fetchMarkers,
+    // Always refetch after error or success:
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ['markers'] });
+    },
+  })
 
   useEffect(() => {
     const initialCenter = {
@@ -26,12 +35,12 @@ function GoogleMapContainer({ minHeight }: { minHeight: string }) {
       });
 
       googleMap.addListener("dragend", () => {
-        console.log("center is changed. try to re-fetch!!");
-        googleMarkersAction.getMarkers();
+        console.log("center is changed. try to re-fetch!");
+        markerMutation.mutate();
       });
       googleMap.addListener("zoom_changed", () => {
-        console.log("zoom is changed. try to re-fetch!!");
-        googleMarkersAction.getMarkers();
+        console.log("zoom is changed. try to re-fetch!");
+        markerMutation.mutate();
       });
 
       /**
@@ -39,18 +48,18 @@ function GoogleMapContainer({ minHeight }: { minHeight: string }) {
        */
       const initMarkersEvent = googleMap.addListener('bounds_changed', () => {
         console.log("==========bounds are changed. try to fetch!==========");
-        googleMarkersAction.getMarkers();
+        markerMutation.mutate();
         google.maps.event.removeListener(initMarkersEvent)
       })
 
-      googleMapActions.setMap(googleMap);
+      googleMapStore.setState(googleMap);
     }
   }, []);
 
   return (
     <>
       <div ref={ref} id="map" style={{ minHeight: minHeight, }} />
-      {map && <GoogleMarkersContainer map={map} markers={[]}/>}
+      {<GoogleMarkersContainer />}
     </>
   );
 }
