@@ -12,6 +12,7 @@ function GoogleMarker({ map, marker, onClick }: { map: google.maps.Map, marker: 
     });
 
     newMarker.addListener('click', onClick);
+
     return () => {
       console.log("marker is unmounted");
       newMarker.setMap(null);

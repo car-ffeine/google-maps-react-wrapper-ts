@@ -1,11 +1,11 @@
 import { useEffect, useRef } from "react";
 import { googleMapStore } from "../store/googleMapStore";
-import { useExternalValue } from "external-state";
+import {useExternalState, useExternalValue} from "external-state";
 import GoogleMapListener from "./GoogleMapListener";
 
 function GoogleMapContainer({ minHeight }: { minHeight: string }) {
   const ref = useRef<HTMLDivElement>(null);
-  const googleMap = useExternalValue(googleMapStore);
+  const [googleMap,setGoogleMap] = useExternalState(googleMapStore);
 
   console.log('혹시 재 렌더링 되면 이게 뜰 것임')
 
@@ -18,13 +18,13 @@ function GoogleMapContainer({ minHeight }: { minHeight: string }) {
     const initialZoomSize = 14;
 
     if (ref.current) {
-      const googleMap = new window.google.maps.Map(ref.current, {
+      const initialMap = new window.google.maps.Map(ref.current, {
         center: initialCenter,
         zoom: initialZoomSize,
         disableDefaultUI: true,
       });
 
-      googleMapStore.setState(googleMap);
+      setGoogleMap(initialMap);
     }
   }, []);
 

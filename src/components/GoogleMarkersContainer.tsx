@@ -4,14 +4,14 @@ import { googleMapStore } from "../store/googleMapStore";
 import { useMarkers } from "../query/markerQuery";
 
 function GoogleMarkersContainer() {
-  const map = useExternalValue(googleMapStore);
+  const googleMap = useExternalValue(googleMapStore);
 
   // react-query
-  const { isFetching, ...queryInfo } = useMarkers();
+  const { ...queryInfo } = useMarkers();
   const markers = queryInfo.data
   console.log(`markers in component: ${markers?.length}`)
 
-  if (!markers || !map || !queryInfo.isSuccess) {
+  if (!markers || !googleMap || !queryInfo.isSuccess) {
     return <></>
   }
 
@@ -21,7 +21,7 @@ function GoogleMarkersContainer() {
         markers.map((marker) => (
           <GoogleMarker
             key={marker.id}
-            map={map}
+            map={googleMap}
             marker={marker}
             onClick={() => console.log(marker)}
           />

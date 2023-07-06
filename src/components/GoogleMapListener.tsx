@@ -14,26 +14,17 @@ function GoogleMapListener({ googleMap }: { googleMap: google.maps.Map }) {
     },
   })
 
-
   useEffect(() => {
 
     googleMap.addListener("dragend", () => {
       console.log("center is changed. try to re-fetch!");
-      markerMutation.mutate();
+      markerMutation.mutate(); // react-query 한테 업데이트 요청하는 역할
     });
+
     googleMap.addListener("zoom_changed", () => {
       console.log("zoom is changed. try to re-fetch!");
       markerMutation.mutate();
     });
-
-    /**
-     * 최초 1회 바운드 값 설정 이후에 마커를 요청한다. 이후에 스스로 제거 처리됨
-     */
-    const initMarkersEvent = googleMap.addListener('bounds_changed', () => {
-      console.log("==========bounds are changed. try to fetch!==========");
-      markerMutation.mutate();
-      google.maps.event.removeListener(initMarkersEvent)
-    })
 
   }, [])
 

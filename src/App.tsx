@@ -11,7 +11,12 @@ const render = (status: Status) => {
     case Status.FAILURE:
       return <>에러 발생</>;
     case Status.SUCCESS:
-      return <></>;
+      return (
+        <>
+          <GoogleMapContainer minHeight="100vh" />
+          <GoogleMarkersContainer />
+        </>
+      );
   }
 };
 
@@ -22,10 +27,7 @@ function App() {
       <Wrapper
         apiKey={`${process.env.REACT_APP_API_KEY}`}
         render={render}
-      >
-        <GoogleMapContainer minHeight="100vh" />
-        <GoogleMarkersContainer />
-      </Wrapper>
+      />
       <UI />
     </>
   );
