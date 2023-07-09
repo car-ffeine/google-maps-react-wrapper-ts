@@ -1,5 +1,5 @@
 import { Wrapper, Status } from "@googlemaps/react-wrapper";
-import GoogleMapContainer from "./components/GoogleMapContainer";
+import GoogleMap from "./components/GoogleMap";
 import UI from "./components/UI";
 import GoogleMarkersContainer from "./components/GoogleMarkersContainer";
 
@@ -13,7 +13,7 @@ const render = (status: Status) => {
     case Status.SUCCESS:
       return (
         <>
-          <GoogleMapContainer minHeight="100vh" />
+          <GoogleMap minHeight="100vh" />
           <GoogleMarkersContainer />
         </>
       );
