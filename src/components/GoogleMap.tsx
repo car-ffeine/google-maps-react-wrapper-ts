@@ -35,23 +35,23 @@ function GoogleMapListener({googleMap}: { googleMap: google.maps.Map }) {
   )
 }
 
-function GoogleMap({ minHeight }: { minHeight: string }) {
+interface GoogleMapProps {
+  minHeight: string;
+  initialPosition: google.maps.LatLngLiteral;
+  initialZoomSize: number;
+}
+
+function GoogleMap({minHeight, initialPosition, initialZoomSize}: GoogleMapProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const [googleMap,setGoogleMap] = useExternalState(googleMapStore);
+  const [googleMap, setGoogleMap] = useExternalState(googleMapStore);
 
   console.log('혹시 재 렌더링 되면 이게 뜰 것임')
 
   useEffect(() => {
-    const initialCenter = {
-      lat: 37.5056102333107,
-      lng: 127.05081496722168,
-    };
-
-    const initialZoomSize = 14;
 
     if (ref.current) {
       const initialMap = new window.google.maps.Map(ref.current, {
-        center: initialCenter,
+        center: initialPosition,
         zoom: initialZoomSize,
         disableDefaultUI: true,
       });
@@ -62,8 +62,8 @@ function GoogleMap({ minHeight }: { minHeight: string }) {
 
   return (
     <>
-      <div ref={ref} id="map" style={{ minHeight: minHeight, }} />
-      {googleMap && <GoogleMapListener googleMap={googleMap} />}
+      <div ref={ref} id="map" style={{minHeight: minHeight}}/>
+      {googleMap && <GoogleMapListener googleMap={googleMap}/>}
     </>
   );
 }

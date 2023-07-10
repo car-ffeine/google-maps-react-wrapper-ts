@@ -1,4 +1,4 @@
-import { Wrapper, Status } from "@googlemaps/react-wrapper";
+import {Status, Wrapper} from "@googlemaps/react-wrapper";
 import GoogleMap from "./components/GoogleMap";
 import UI from "./components/UI";
 import GoogleMarkersContainer from "./components/GoogleMarkersContainer";
@@ -13,8 +13,15 @@ const render = (status: Status) => {
     case Status.SUCCESS:
       return (
         <>
-          <GoogleMap minHeight="100vh" />
-          <GoogleMarkersContainer />
+          <GoogleMap
+            minHeight="100vh"
+            initialPosition={{
+              lat: 37.5056102333107,
+              lng: 127.05081496722168,
+            }}
+            initialZoomSize={14}
+          />
+          <GoogleMarkersContainer/>
         </>
       );
   }
@@ -28,7 +35,7 @@ function App() {
         apiKey={`${process.env.REACT_APP_API_KEY}`}
         render={render}
       />
-      <UI />
+      <UI/>
     </>
   );
 }
