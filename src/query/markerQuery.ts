@@ -1,9 +1,9 @@
 import axios from "axios";
-import { Marker, MarkersRequest } from "../types/type";
-import { useQuery } from "@tanstack/react-query";
-import { googleMapStore } from "../store/googleMapStore";
+import {Station, StationsRequest} from "../types/type";
+import {useQuery} from "@tanstack/react-query";
+import {googleMapStore} from "../store/googleMapStore";
 
-const getDisplayPosition = (map:google.maps.Map) => {
+const getDisplayPosition = (map: google.maps.Map) => {
   const center = map.getCenter() as google.maps.LatLng;
   const bounds = map.getBounds() as google.maps.LatLngBounds;
 
@@ -17,22 +17,21 @@ const getDisplayPosition = (map:google.maps.Map) => {
     lat: centerY,
     deltaX,
     deltaY
-  } as MarkersRequest
+  } as StationsRequest
 }
 
-export async function fetchMarkers(): Promise<Marker[]> {
+export async function fetchStations(): Promise<Station[]> {
   const map = googleMapStore.getState();
-  if(map){
+  if (map) {
     const query = getDisplayPosition(map);
-    const res = await axios.post('/getMarkers', query);
+    const res = await axios.post('/getStations', query);
     return res.data;
-  }
-  else {
+  } else {
     return [];
   }
 }
 
-export function useMarkers() {
-  return useQuery({ queryKey: ['markers'], queryFn: fetchMarkers })
+export function useStations() {
+  return useQuery({queryKey: ['stations'], queryFn: fetchStations})
 }
 

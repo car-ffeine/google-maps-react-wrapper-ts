@@ -1,13 +1,13 @@
-import { useExternalValue } from "external-state";
+import {useExternalValue} from "external-state";
 import GoogleMarker from "./GoogleMarker";
-import { googleMapStore } from "../store/googleMapStore";
-import { useMarkers } from "../query/markerQuery";
+import {googleMapStore} from "../store/googleMapStore";
+import {useStations} from "../query/markerQuery";
 
-function GoogleMarkersContainer() {
+function StationsContainer() {
   const googleMap = useExternalValue(googleMapStore);
 
   // react-query
-  const { ...queryInfo } = useMarkers();
+  const {...queryInfo} = useStations();
   const markers = queryInfo.data
   console.log(`markers in component: ${markers?.length}`)
 
@@ -31,4 +31,4 @@ function GoogleMarkersContainer() {
   )
 }
 
-export default GoogleMarkersContainer;
+export default StationsContainer;

@@ -1,7 +1,7 @@
 // src/mocks/handlers.js
-import { rest } from 'msw'
-import { MarkersRequest } from '../types/type'
-import { markers } from "../data/markers";
+import {rest} from 'msw'
+import {StationsRequest} from '../types/type'
+import {markers} from "../data/markers";
 
 export const handlers = [
   rest.post('/login', (req, res, ctx) => {
@@ -37,9 +37,9 @@ export const handlers = [
     )
   }),
 
-  rest.post('/getMarkers', async (req, res, ctx) => {
-    const body: MarkersRequest = await req.json();
-    const { lng, lat, deltaX, deltaY } = body;
+  rest.post('/getStations', async (req, res, ctx) => {
+    const body: StationsRequest = await req.json();
+    const {lng, lat, deltaX, deltaY} = body;
     // console.log(lng, lat, deltaX, deltaY,)
 
     const y1 = (lat + deltaY);

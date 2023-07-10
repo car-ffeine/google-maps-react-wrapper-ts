@@ -1,11 +1,11 @@
-export type MarkersRequest = {
+export type StationsRequest = {
   lng: number,
   lat: number,
   deltaX: number,
   deltaY: number
 }
 
-export type Marker = {
+export type Station = {
   id: number,
   lat: number,
   lng: number,

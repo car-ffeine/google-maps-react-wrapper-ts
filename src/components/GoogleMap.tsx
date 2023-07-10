@@ -2,17 +2,17 @@ import {useEffect, useRef} from "react";
 import {googleMapStore} from "../store/googleMapStore";
 import {useExternalState} from "external-state";
 import {useMutation, useQueryClient} from "@tanstack/react-query";
-import {fetchMarkers} from "../query/markerQuery";
+import {fetchStations} from "../query/markerQuery";
 
 function GoogleMapListener({googleMap}: { googleMap: google.maps.Map }) {
 
   const queryClient = useQueryClient();
 
-  const markerMutation = useMutation({
-    mutationFn: fetchMarkers,
+  const stationMutation = useMutation({
+    mutationFn: fetchStations,
     // Always refetch after error or success:
     onSettled: () => {
-      queryClient.invalidateQueries({queryKey: ['markers']});
+      queryClient.invalidateQueries({queryKey: ['stations']});
     },
   })
 
@@ -20,12 +20,12 @@ function GoogleMapListener({googleMap}: { googleMap: google.maps.Map }) {
 
     googleMap.addListener("dragend", () => {
       console.log("center is changed. try to re-fetch!");
-      markerMutation.mutate(); // react-query 한테 업데이트 요청하는 역할
+      stationMutation.mutate(); // react-query 한테 업데이트 요청하는 역할
     });
 
     googleMap.addListener("zoom_changed", () => {
       console.log("zoom is changed. try to re-fetch!");
-      markerMutation.mutate();
+      stationMutation.mutate();
     });
 
   }, [])
