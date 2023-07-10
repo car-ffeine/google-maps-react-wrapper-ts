@@ -20,8 +20,8 @@ const render = (status: Status) => {
               lng: 127.05081496722168,
             }}
             initialZoomSize={14}
+            markersContainer={(googleMap) => <StationsContainer googleMap={googleMap}/>}
           />
-          <StationsContainer/>
         </>
       );
   }

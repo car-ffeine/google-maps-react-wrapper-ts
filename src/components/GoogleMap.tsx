@@ -1,4 +1,4 @@
-import {useEffect, useRef} from "react";
+import {ReactNode, useEffect, useRef} from "react";
 import {googleMapStore} from "../store/googleMapStore";
 import {useExternalState} from "external-state";
 import {useMutation, useQueryClient} from "@tanstack/react-query";
@@ -39,9 +39,10 @@ interface GoogleMapProps {
   minHeight: string;
   initialPosition: google.maps.LatLngLiteral;
   initialZoomSize: number;
+  markersContainer: (googleMap: google.maps.Map) => ReactNode;
 }
 
-function GoogleMap({minHeight, initialPosition, initialZoomSize}: GoogleMapProps) {
+function GoogleMap({minHeight, initialPosition, initialZoomSize, markersContainer}: GoogleMapProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [googleMap, setGoogleMap] = useExternalState(googleMapStore);
 
@@ -63,7 +64,12 @@ function GoogleMap({minHeight, initialPosition, initialZoomSize}: GoogleMapProps
   return (
     <>
       <div ref={ref} id="map" style={{minHeight: minHeight}}/>
-      {googleMap && <GoogleMapListener googleMap={googleMap}/>}
+      {googleMap && (
+        <>
+          <GoogleMapListener googleMap={googleMap}/>
+          <>{markersContainer(googleMap)}</>
+        </>
+      )}
     </>
   );
 }
