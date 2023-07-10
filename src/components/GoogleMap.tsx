@@ -1,11 +1,13 @@
-import {ReactNode, useEffect, useRef} from "react";
+import {useEffect, useRef} from "react";
 import {googleMapStore} from "../store/googleMapStore";
-import {useExternalState} from "external-state";
+import {useExternalState, useExternalValue} from "external-state";
 import {useMutation, useQueryClient} from "@tanstack/react-query";
 import {fetchStations} from "../query/markerQuery";
+import StationsContainer from "./StationsContainer";
 
-function GoogleMapListener({googleMap}: { googleMap: google.maps.Map }) {
+function GoogleMapListener() {
 
+  const googleMap = useExternalValue(googleMapStore);
   const queryClient = useQueryClient();
 
   const stationMutation = useMutation({
@@ -17,17 +19,17 @@ function GoogleMapListener({googleMap}: { googleMap: google.maps.Map }) {
   })
 
   useEffect(() => {
+    if (googleMap) {
+      googleMap.addListener("dragend", () => {
+        console.log("center is changed. try to re-fetch!");
+        stationMutation.mutate(); // react-query 한테 업데이트 요청하는 역할
+      });
 
-    googleMap.addListener("dragend", () => {
-      console.log("center is changed. try to re-fetch!");
-      stationMutation.mutate(); // react-query 한테 업데이트 요청하는 역할
-    });
-
-    googleMap.addListener("zoom_changed", () => {
-      console.log("zoom is changed. try to re-fetch!");
-      stationMutation.mutate();
-    });
-
+      googleMap.addListener("zoom_changed", () => {
+        console.log("zoom is changed. try to re-fetch!");
+        stationMutation.mutate();
+      });
+    }
   }, [])
 
   return (
@@ -39,10 +41,9 @@ interface GoogleMapProps {
   minHeight: string;
   initialPosition: google.maps.LatLngLiteral;
   initialZoomSize: number;
-  markersContainer: (googleMap: google.maps.Map) => ReactNode;
 }
 
-function GoogleMap({minHeight, initialPosition, initialZoomSize, markersContainer}: GoogleMapProps) {
+function GoogleMap({minHeight, initialPosition, initialZoomSize}: GoogleMapProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [googleMap, setGoogleMap] = useExternalState(googleMapStore);
 
@@ -66,8 +67,8 @@ function GoogleMap({minHeight, initialPosition, initialZoomSize, markersContaine
       <div ref={ref} id="map" style={{minHeight: minHeight}}/>
       {googleMap && (
         <>
-          <GoogleMapListener googleMap={googleMap}/>
-          <>{markersContainer(googleMap)}</>
+          <GoogleMapListener/>
+          <StationsContainer/>
         </>
       )}
     </>

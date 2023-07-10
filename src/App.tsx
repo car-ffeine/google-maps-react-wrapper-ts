@@ -1,7 +1,6 @@
 import {Status, Wrapper} from "@googlemaps/react-wrapper";
 import GoogleMap from "./components/GoogleMap";
 import UI from "./components/UI";
-import StationsContainer from "./components/StationsContainer";
 
 
 const render = (status: Status) => {
@@ -20,7 +19,6 @@ const render = (status: Status) => {
               lng: 127.05081496722168,
             }}
             initialZoomSize={14}
-            markersContainer={(googleMap) => <StationsContainer googleMap={googleMap}/>}
           />
         </>
       );

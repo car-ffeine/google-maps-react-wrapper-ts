@@ -1,7 +1,11 @@
 import GoogleMarker from "./GoogleMarker";
 import {useStations} from "../query/markerQuery";
+import {useExternalValue} from "external-state";
+import {googleMapStore} from "../store/googleMapStore";
 
-function StationsContainer({googleMap}: { googleMap: google.maps.Map }) {
+function StationsContainer() {
+
+  const googleMap = useExternalValue(googleMapStore);
 
   // react-query
   const {...queryInfo} = useStations();
