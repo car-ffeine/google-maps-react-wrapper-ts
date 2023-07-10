@@ -13,10 +13,10 @@ const getDisplayPosition = (map: google.maps.Map) => {
   const centerY = center.lat();
 
   return {
-    lng: centerX,
-    lat: centerY,
-    deltaX,
-    deltaY
+    longitude: centerX,
+    latitude: centerY,
+    longitudeDelta: deltaX,
+    latitudeDelta: deltaY
   } as StationsRequest
 }
 

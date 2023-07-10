@@ -6,7 +6,7 @@ function GoogleMarker({map, marker, onClick}: { map: google.maps.Map, marker: St
   useEffect(() => {
     console.log("✅✅ marker is mounted ✅✅");
     const newMarker = new google.maps.Marker({
-      position: {lat: marker.lat, lng: marker.lng},
+      position: {lat: marker.latitude, lng: marker.longitude},
       map: map,
       title: `${marker.title}`,
     });

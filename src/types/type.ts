@@ -1,13 +1,13 @@
 export type StationsRequest = {
-  lng: number,
-  lat: number,
-  deltaX: number,
-  deltaY: number
+  longitude: number,
+  latitude: number,
+  longitudeDelta: number,
+  latitudeDelta: number
 }
 
 export type Station = {
   id: number,
-  lat: number,
-  lng: number,
+  latitude: number,
+  longitude: number,
   title: string
 }

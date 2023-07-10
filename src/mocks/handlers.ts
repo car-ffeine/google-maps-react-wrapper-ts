@@ -39,16 +39,16 @@ export const handlers = [
 
   rest.post('/getStations', async (req, res, ctx) => {
     const body: StationsRequest = await req.json();
-    const {lng, lat, deltaX, deltaY} = body;
+    const {longitude, latitude, longitudeDelta, latitudeDelta} = body;
     // console.log(lng, lat, deltaX, deltaY,)
 
-    const y1 = (lat + deltaY);
-    const y2 = (lat - deltaY);
-    const x1 = (lng + deltaX);
-    const x2 = (lng - deltaX);
+    const y1 = (latitude + latitudeDelta);
+    const y2 = (latitude - latitudeDelta);
+    const x1 = (longitude + longitudeDelta);
+    const x2 = (longitude - longitudeDelta);
 
     const foundMarkers = markers.filter((marker) =>
-      (marker.lat < y1 && marker.lat > y2) && (marker.lng < x1 && marker.lng > x2)
+      (marker.latitude < y1 && marker.latitude > y2) && (marker.longitude < x1 && marker.longitude > x2)
     )
     console.log(foundMarkers.length)
     // console.log(x1, x2, y1, y2)
