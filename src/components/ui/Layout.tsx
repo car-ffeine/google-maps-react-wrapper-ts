@@ -1,4 +1,5 @@
 import StationCount from "./StatiionCount";
+import ZoomController from "./ZoomController";
 
 function Layout() {
 
@@ -6,6 +7,7 @@ function Layout() {
   return (
     <>
       <StationCount/>
+      <ZoomController/>
     </>
   )
 }
