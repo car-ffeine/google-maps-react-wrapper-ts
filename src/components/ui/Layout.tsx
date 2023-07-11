@@ -1,6 +1,6 @@
-import {useStations} from "../query/markerQuery";
+import {useStations} from "../../query/markerQuery";
 
-function UI() {
+function Layout() {
 
   // react-query
   const {isFetching, ...queryInfo} = useStations();
@@ -26,4 +26,4 @@ function UI() {
   )
 }
 
-export default UI;
+export default Layout;

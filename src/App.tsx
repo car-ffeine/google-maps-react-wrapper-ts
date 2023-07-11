@@ -1,6 +1,6 @@
 import {Status, Wrapper} from "@googlemaps/react-wrapper";
-import GoogleMap from "./components/GoogleMap";
-import UI from "./components/UI";
+import GoogleMap from "./components/googleMaps/GoogleMap";
+import Layout from "./components/ui/Layout";
 
 
 const render = (status: Status) => {
@@ -33,7 +33,7 @@ function App() {
         apiKey={`${process.env.REACT_APP_API_KEY}`}
         render={render}
       />
-      <UI/>
+      <Layout/>
     </>
   );
 }

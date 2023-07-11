@@ -1,7 +1,7 @@
 import GoogleMarker from "./GoogleMarker";
-import {useStations} from "../query/markerQuery";
+import {useStations} from "../../query/markerQuery";
 import {useExternalValue} from "external-state";
-import {googleMapStore} from "../store/googleMapStore";
+import {googleMapStore} from "../../store/googleMapStore";
 
 function StationsContainer() {
 

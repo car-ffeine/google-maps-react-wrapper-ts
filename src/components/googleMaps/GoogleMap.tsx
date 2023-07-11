@@ -1,8 +1,8 @@
 import {useEffect, useRef} from "react";
-import {googleMapStore} from "../store/googleMapStore";
+import {googleMapStore} from "../../store/googleMapStore";
 import {useExternalState, useExternalValue} from "external-state";
 import {useMutation, useQueryClient} from "@tanstack/react-query";
-import {fetchStations} from "../query/markerQuery";
+import {fetchStations} from "../../query/markerQuery";
 import StationsContainer from "./StationsContainer";
 
 function GoogleMapListener() {

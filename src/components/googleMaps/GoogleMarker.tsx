@@ -1,5 +1,5 @@
 import {useEffect} from "react";
-import {Station} from "../types/type";
+import {Station} from "../../types/type";
 
 function GoogleMarker({map, marker, onClick}: { map: google.maps.Map, marker: Station, onClick: () => void }) {
 
